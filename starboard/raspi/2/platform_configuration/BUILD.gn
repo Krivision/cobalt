@@ -21,7 +21,6 @@ config("platform_configuration") {
       "-march=armv7-a",
       "-mfpu=neon-vfpv4",
       "-mfloat-abi=hard",
-      "-mcpu=cortex-a8",
       "-mtune=cortex-a8",
     ]
   } else {
