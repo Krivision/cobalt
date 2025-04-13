@@ -27,9 +27,9 @@ bool SbMediaIsAudioSupported(SbMediaAudioCodec audio_codec,
     return bitrate <= kSbMediaMaxAudioBitrateInBitsPerSecond;
   }
 
-  if (audio_codec == kSbMediaAudioCodecOpus) {
-    return bitrate <= kSbMediaMaxAudioBitrateInBitsPerSecond;
-  }
+  // if (audio_codec == kSbMediaAudioCodecOpus) {
+  //   return bitrate <= kSbMediaMaxAudioBitrateInBitsPerSecond;
+  // }
 
   return false;
 }

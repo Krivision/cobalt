@@ -18,16 +18,16 @@ declare_args() {
 
 config("common_flags") {
   ldflags = [
-    "--sysroot=$raspi_home/busterroot",
+    "--sysroot=$raspi_home/arm-buildroot-linux-gnueabihf/sysroot",
 
     # This is a quirk of Raspbian, these are required to link any GL-related
     # libraries.
-    "-L$raspi_home/busterroot/opt/vc/lib",
-    "-Wl,-rpath=$raspi_home/busterroot/opt/vc/lib",
-    "-L$raspi_home/busterroot/usr/lib/arm-linux-gnueabihf",
-    "-Wl,-rpath=$raspi_home/busterroot/usr/lib/arm-linux-gnueabihf",
-    "-L$raspi_home/busterroot/lib/arm-linux-gnueabihf",
-    "-Wl,-rpath=$raspi_home/busterroot/lib/arm-linux-gnueabihf",
+    "-L$raspi_home/arm-buildroot-linux-gnueabihf/sysroot/opt/vc/lib",
+    "-Wl,-rpath=$raspi_home/arm-buildroot-linux-gnueabihf/sysroot/opt/vc/lib",
+    "-L$raspi_home/arm-buildroot-linux-gnueabihf/sysroot/usr/lib/arm-linux-gnueabihf",
+    "-Wl,-rpath=$raspi_home/arm-buildroot-linux-gnueabihf/sysroot/usr/lib/arm-linux-gnueabihf",
+    "-L$raspi_home/arm-buildroot-linux-gnueabihf/sysroot/lib/arm-linux-gnueabihf",
+    "-Wl,-rpath=$raspi_home/arm-buildroot-linux-gnueabihf/sysroot/lib/arm-linux-gnueabihf",
 
     # Cleanup unused sections
     "-Wl,-gc-sections",
@@ -40,6 +40,7 @@ config("common_flags") {
     "bcm_host",
     "vcos",
     "vchiq_arm",
+    "vchostif",
     "brcmGLESv2",
     "brcmEGL",
 
@@ -115,16 +116,18 @@ config("compiler_flags") {
     # matters: Wall implies Wunused-parameter and Wno-unused-parameter
     # has no effect if specified before Wall.
     "-Wno-unused-parameter",
+    "-Wno-error=stringop-overflow=",
+    "-Wno-error=attributes",
 
     # Specify the sysroot with all your include dependencies.
-    "--sysroot=$raspi_home/busterroot",
+    "--sysroot=$raspi_home/arm-buildroot-linux-gnueabihf/sysroot",
 
     # This is a quirk of Raspbian, these are required to include any
     # GL-related headers.
-    "-I$raspi_home/busterroot/opt/vc/include",
-    "-I$raspi_home/busterroot/opt/vc/include/interface/vcos/pthreads",
-    "-I$raspi_home/busterroot/opt/vc/include/interface/vmcs_host/linux",
-    "-I$raspi_home/busterroot/usr/include/arm-linux-gnueabihf",
+    "-I$raspi_home/arm-buildroot-linux-gnueabihf/sysroot/opt/vc/include",
+    "-I$raspi_home/arm-buildroot-linux-gnueabihf/sysroot/opt/vc/include/interface/vcos/pthreads",
+    "-I$raspi_home/arm-buildroot-linux-gnueabihf/sysroot/opt/vc/include/interface/vmcs_host/linux",
+    "-I$raspi_home/arm-buildroot-linux-gnueabihf/sysroot/usr/include/arm-linux-gnueabihf",
   ]
 
   if (!cobalt_fastbuild && (is_debug || is_devel)) {

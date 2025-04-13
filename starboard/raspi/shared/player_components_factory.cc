@@ -16,7 +16,6 @@
 #include "starboard/raspi/shared/open_max/video_decoder.h"
 #include "starboard/raspi/shared/video_renderer_sink_impl.h"
 #include "starboard/shared/ffmpeg/ffmpeg_audio_decoder.h"
-#include "starboard/shared/opus/opus_audio_decoder.h"
 #include "starboard/shared/starboard/media/media_util.h"
 #include "starboard/shared/starboard/player/filter/adaptive_audio_decoder_internal.h"
 #include "starboard/shared/starboard/player/filter/audio_decoder_internal.h"
@@ -53,17 +52,8 @@ class PlayerComponentsFactory : public PlayerComponents::Factory {
       auto decoder_creator = [](const media::AudioStreamInfo& audio_stream_info,
                                 SbDrmSystem drm_system) {
         typedef ::starboard::shared::ffmpeg::AudioDecoder AudioDecoderImpl;
-        typedef ::starboard::shared::opus::OpusAudioDecoder
-            OpusAudioDecoderImpl;
-
-        if (audio_stream_info.codec == kSbMediaAudioCodecOpus) {
-          std::unique_ptr<OpusAudioDecoderImpl> opus_audio_decoder_impl(
-              new OpusAudioDecoderImpl(audio_stream_info));
-          if (opus_audio_decoder_impl && opus_audio_decoder_impl->is_valid()) {
-            return std::unique_ptr<AudioDecoder>(
-                std::move(opus_audio_decoder_impl));
-          }
-        } else {
+ 
+        {
           std::unique_ptr<AudioDecoderImpl> audio_decoder_impl(
               AudioDecoderImpl::Create(audio_stream_info));
           if (audio_decoder_impl && audio_decoder_impl->is_valid()) {
