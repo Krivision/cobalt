@@ -1599,6 +1599,7 @@ config("default_warnings") {
       # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=61638
       cflags += [ "-Wno-comments" ]
       cflags_cc += [ "-Wno-error=stringop-truncation" ]
+      cflags_cc += [ "-Wno-error=format-truncation=" ]
 
       # -Wpacked-not-aligned complains all generated mojom-shared-internal.h
       # files.

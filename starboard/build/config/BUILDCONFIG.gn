@@ -19,6 +19,7 @@ declare_args() {
   # Temporary gn arg for work on base/net update.
   cobalt_pending_clean_up = true
 
+  # is_clang = false
   is_clang = true
 
   build_type = "devel"
